@@ -214,8 +214,12 @@ export const AIAssistantModal: React.FC<AIAssistantModalProps> = ({
             {/* Modal Header */}
             <div className="bg-stone-900 text-white px-4 py-3.5 flex items-center justify-between border-b border-stone-800 shrink-0">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 font-bold">
-                  <Bot className="w-5 h-5 text-amber-400" />
+                <div className="w-9 h-9 rounded-xl bg-stone-800 border border-stone-700 p-0.5 flex items-center justify-center shrink-0">
+                  <img
+                    src="./favicon.png"
+                    alt="Trip Now Assistant"
+                    className="w-full h-full object-contain rounded-lg"
+                  />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">

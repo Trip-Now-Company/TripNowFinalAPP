@@ -65,8 +65,12 @@ export const WelcomeGate: React.FC<WelcomeGateProps> = ({
         
         {/* Header Branding */}
         <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center w-14 h-14 bg-amber-500/10 border border-amber-500/20 text-amber-700 rounded-2xl mb-3 shadow-inner">
-            <Car className="w-7 h-7 text-amber-600" />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-3 shadow-md bg-stone-50 border border-stone-200 p-1">
+            <img
+              src="./favicon.png"
+              alt="Trip Now"
+              className="w-full h-full object-contain rounded-xl"
+            />
           </div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-stone-100 rounded-full text-[11px] font-mono font-medium text-stone-600 mb-2">
             <span>🇸🇻</span>
