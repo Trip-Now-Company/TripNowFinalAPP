@@ -1,0 +1,309 @@
+import React, { useState } from 'react';
+import { ShoppingBag, User, ShieldCheck, Globe, Menu, X, Trash2, Sparkles, Sun, Moon } from 'lucide-react';
+import { Language, UserProfile, ThemeMode } from '../types';
+import { t } from '../services/i18n';
+
+interface NavbarProps {
+  currentTab: string;
+  setCurrentTab: (tab: string) => void;
+  lang: Language;
+  setLang: (lang: Language) => void;
+  theme: ThemeMode;
+  onToggleTheme: () => void;
+  cartCount: number;
+  profile: UserProfile | null;
+  onOpenAuthModal: () => void;
+  onLogoutProfile: () => void;
+  isAdmin: boolean;
+  onOpenAssistant?: () => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({
+  currentTab,
+  setCurrentTab,
+  lang,
+  setLang,
+  theme,
+  onToggleTheme,
+  cartCount,
+  profile,
+  onOpenAuthModal,
+  onLogoutProfile,
+  isAdmin,
+  onOpenAssistant
+}) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const toggleLang = () => {
+    setLang(lang === 'es' ? 'en' : 'es');
+  };
+
+  const handleNav = (tab: string) => {
+    setCurrentTab(tab);
+    setMobileMenuOpen(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  return (
+    <header className="sticky top-0 z-40 bg-[#FBFBFA]/95 backdrop-blur-md border-b border-stone-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20">
+          
+          {/* Zone 1: Brand Wordmark (Logo icon + Fraunces serif text) */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => handleNav('home')}
+              className="text-left group cursor-pointer focus:outline-none flex items-center gap-2.5"
+            >
+              <img
+                src="./favicon.png"
+                alt="Trip Now Logo"
+                className="w-8 h-8 sm:w-9 sm:h-9 object-contain rounded-full shadow-xs"
+              />
+              <span className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-stone-900 group-hover:text-amber-800 transition-colors">
+                Trip Now
+              </span>
+              <span className="sr-only">Trip Now El Salvador</span>
+            </button>
+            <span className="hidden sm:inline-block text-xs font-mono text-stone-500 border-l border-stone-300 pl-3">
+              El Salvador
+            </span>
+          </div>
+
+          {/* Zone 2: Navigation Links (Clean text links with hover transitions) */}
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-stone-600">
+            <button
+              onClick={() => handleNav('home')}
+              className={`hover:text-stone-900 transition-colors py-1 cursor-pointer ${
+                currentTab === 'home' ? 'text-stone-950 font-semibold border-b-2 border-stone-900' : ''
+              }`}
+            >
+              {t('nav.home', lang)}
+            </button>
+            <button
+              onClick={() => handleNav('catalog')}
+              className={`hover:text-stone-900 transition-colors py-1 cursor-pointer ${
+                currentTab === 'catalog' ? 'text-stone-950 font-semibold border-b-2 border-stone-900' : ''
+              }`}
+            >
+              {t('nav.catalog', lang)}
+            </button>
+            <button
+              onClick={() => handleNav('branches')}
+              className={`hover:text-stone-900 transition-colors py-1 cursor-pointer ${
+                currentTab === 'branches' ? 'text-stone-950 font-semibold border-b-2 border-stone-900' : ''
+              }`}
+            >
+              {t('nav.branches', lang)}
+            </button>
+          </nav>
+
+          {/* Zone 3: Primary Actions (Language, Profile, Cart, Admin) */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* AI Assistant Quick Guide Button */}
+            {onOpenAssistant && (
+              <button
+                onClick={onOpenAssistant}
+                className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-amber-900 bg-amber-50 hover:bg-amber-100 border border-amber-200/90 rounded-lg transition-colors cursor-pointer"
+                title={lang === 'es' ? 'Asistente IA (Guía de la página)' : 'AI Guide (Page assistance)'}
+              >
+                <Sparkles className="w-3.5 h-3.5 text-amber-600 animate-pulse" />
+                <span>{lang === 'es' ? 'Asistente IA' : 'AI Assistant'}</span>
+              </button>
+            )}
+
+            {/* Language Toggle */}
+            <button
+              onClick={toggleLang}
+              className="px-2.5 py-1.5 text-xs font-mono font-medium text-stone-700 bg-stone-100 hover:bg-stone-200 rounded-lg transition-colors flex items-center gap-1 cursor-pointer"
+              title="Cambiar idioma / Switch language"
+            >
+              <Globe className="w-3.5 h-3.5 text-stone-500" />
+              <span>{lang.toUpperCase()}</span>
+            </button>
+
+            {/* Dark / Light Theme Toggle Button */}
+            <button
+              onClick={onToggleTheme}
+              className="px-2.5 py-1.5 text-xs font-medium text-stone-700 bg-stone-100 hover:bg-stone-200 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer"
+              title={
+                theme === 'dark'
+                  ? (lang === 'es' ? 'Cambiar a modo claro' : 'Switch to light mode')
+                  : (lang === 'es' ? 'Cambiar a modo oscuro' : 'Switch to dark mode')
+              }
+              aria-label={theme === 'dark' ? 'Modo claro' : 'Modo oscuro'}
+            >
+              {theme === 'dark' ? (
+                <>
+                  <Sun className="w-3.5 h-3.5 text-amber-400" />
+                  <span className="hidden sm:inline font-mono">{lang === 'es' ? 'Claro' : 'Light'}</span>
+                </>
+              ) : (
+                <>
+                  <Moon className="w-3.5 h-3.5 text-stone-600" />
+                  <span className="hidden sm:inline font-mono">{lang === 'es' ? 'Oscuro' : 'Dark'}</span>
+                </>
+              )}
+            </button>
+
+            {/* Client Profile / Identification */}
+            {profile ? (
+              <div className="relative group">
+                <button
+                  onClick={onOpenAuthModal}
+                  className="px-3 py-1.5 text-xs font-medium text-stone-700 bg-stone-100 hover:bg-stone-200 rounded-lg transition-colors flex items-center gap-1.5 max-w-[140px] truncate cursor-pointer"
+                  title={profile.email}
+                >
+                  <User className="w-3.5 h-3.5 text-stone-500" />
+                  <span className="truncate">{profile.nombre.split(' ')[0]}</span>
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={onOpenAuthModal}
+                className="hidden sm:flex px-3 py-1.5 text-xs font-medium text-stone-700 hover:text-stone-900 transition-colors items-center gap-1 cursor-pointer"
+              >
+                <User className="w-3.5 h-3.5" />
+                <span>{t('nav.login', lang)}</span>
+              </button>
+            )}
+
+            {/* Cart Button with Count Badge */}
+            <button
+              onClick={() => handleNav('cart')}
+              className={`relative px-3.5 py-2 text-xs font-medium rounded-lg transition-all flex items-center gap-2 cursor-pointer ${
+                currentTab === 'cart'
+                  ? 'bg-stone-900 text-white shadow-sm'
+                  : 'bg-stone-900 text-white hover:bg-stone-800'
+              }`}
+              aria-label="Carrito de reservas"
+            >
+              <ShoppingBag className="w-4 h-4" />
+              <span className="hidden sm:inline font-mono">{t('nav.cart', lang)}</span>
+              {cartCount > 0 && (
+                <span className="bg-amber-600 text-white font-mono text-[11px] px-1.5 py-0.5 rounded-full min-w-[20px] text-center font-bold">
+                  {cartCount}
+                </span>
+              )}
+            </button>
+
+            {/* Admin Shortcut */}
+            <button
+              onClick={() => handleNav('admin')}
+              className={`p-2 rounded-lg transition-colors cursor-pointer ${
+                currentTab === 'admin'
+                  ? 'bg-amber-100 text-amber-900'
+                  : 'text-stone-500 hover:text-stone-900 hover:bg-stone-100'
+              }`}
+              title={t('nav.admin', lang)}
+              aria-label="Panel administrativo"
+            >
+              <ShieldCheck className="w-4 h-4" />
+            </button>
+
+            {/* Acceso directo a Eliminar Clientes en la barra de navegación */}
+            {(currentTab === 'admin' || isAdmin) && (
+              <button
+                onClick={() => {
+                  handleNav('admin');
+                  window.dispatchEvent(new CustomEvent('tripnow_open_delete_clients'));
+                }}
+                className="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white rounded-lg text-xs font-semibold shadow-xs cursor-pointer transition-all"
+                title="Eliminar Clientes en Firebase"
+              >
+                <Trash2 className="w-3.5 h-3.5 text-white" />
+                <span>Eliminar Clientes</span>
+              </button>
+            )}
+
+            {/* Mobile menu trigger */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 text-stone-600 hover:text-stone-900 rounded-lg hover:bg-stone-100 cursor-pointer"
+              aria-label="Menu"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile menu dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden py-4 border-t border-stone-200 flex flex-col gap-2">
+            <button
+              onClick={() => handleNav('home')}
+              className={`px-3 py-2 text-left text-sm rounded-lg ${currentTab === 'home' ? 'bg-stone-200 font-semibold' : 'text-stone-700'}`}
+            >
+              {t('nav.home', lang)}
+            </button>
+            <button
+              onClick={() => handleNav('catalog')}
+              className={`px-3 py-2 text-left text-sm rounded-lg ${currentTab === 'catalog' ? 'bg-stone-200 font-semibold' : 'text-stone-700'}`}
+            >
+              {t('nav.catalog', lang)}
+            </button>
+            <button
+              onClick={() => handleNav('branches')}
+              className={`px-3 py-2 text-left text-sm rounded-lg ${currentTab === 'branches' ? 'bg-stone-200 font-semibold' : 'text-stone-700'}`}
+            >
+              {t('nav.branches', lang)}
+            </button>
+            <button
+              onClick={() => handleNav('cart')}
+              className={`px-3 py-2 text-left text-sm rounded-lg flex items-center justify-between ${currentTab === 'cart' ? 'bg-stone-200 font-semibold' : 'text-stone-700'}`}
+            >
+              <span>{t('nav.cart', lang)}</span>
+              {cartCount > 0 && <span className="font-mono bg-stone-900 text-white px-2 py-0.5 rounded text-xs">{cartCount}</span>}
+            </button>
+            <button
+              onClick={onToggleTheme}
+              className="px-3 py-2 text-left text-sm rounded-lg text-stone-700 hover:bg-stone-100 flex items-center justify-between"
+            >
+              <span>{lang === 'es' ? 'Modo de visualización' : 'Color theme'}</span>
+              <span className="flex items-center gap-1.5 font-mono text-xs text-stone-600 bg-stone-200 px-2 py-1 rounded">
+                {theme === 'dark' ? (
+                  <>
+                    <Sun className="w-3.5 h-3.5 text-amber-500" />
+                    <span>{lang === 'es' ? 'Claro' : 'Light'}</span>
+                  </>
+                ) : (
+                  <>
+                    <Moon className="w-3.5 h-3.5 text-stone-700" />
+                    <span>{lang === 'es' ? 'Oscuro' : 'Dark'}</span>
+                  </>
+                )}
+              </span>
+            </button>
+            {onOpenAssistant && (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenAssistant();
+                }}
+                className="px-3 py-2 text-left text-sm rounded-lg bg-amber-50 text-amber-900 font-medium border border-amber-200/80 flex items-center gap-2"
+              >
+                <Sparkles className="w-4 h-4 text-amber-600 animate-pulse" />
+                <span>{lang === 'es' ? 'Asistente IA (Guía)' : 'AI Assistant (Guide)'}</span>
+              </button>
+            )}
+            <button
+              onClick={() => handleNav('admin')}
+              className={`px-3 py-2 text-left text-sm rounded-lg ${currentTab === 'admin' ? 'bg-amber-100 font-semibold text-amber-900' : 'text-stone-700'}`}
+            >
+              {t('nav.admin', lang)}
+            </button>
+            {!profile && (
+              <button
+                onClick={() => { setMobileMenuOpen(false); onOpenAuthModal(); }}
+                className="px-3 py-2 text-left text-sm text-stone-700 hover:bg-stone-100 rounded-lg flex items-center gap-2"
+              >
+                <User className="w-4 h-4" />
+                <span>{t('nav.login', lang)}</span>
+              </button>
+            )}
+          </div>
+        )}
+      </div>
+    </header>
+  );
+};
