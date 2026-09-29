@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShoppingBag, User, ShieldCheck, Globe, Menu, X, Trash2, Sparkles, Sun, Moon } from 'lucide-react';
+import { ShoppingBag, User, ShieldCheck, Globe, Menu, X, Trash2, Sparkles, Sun, Moon, Download } from 'lucide-react';
 import { Language, UserProfile, ThemeMode } from '../types';
 import { t } from '../services/i18n';
 
@@ -201,6 +201,17 @@ export const Navbar: React.FC<NavbarProps> = ({
               <ShieldCheck className="w-4 h-4" />
             </button>
 
+            {/* Direct ZIP download button */}
+            <a
+              href="./TripNow-App.zip"
+              download="TripNow-App.zip"
+              className="hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-lg text-xs font-mono font-medium transition-colors cursor-pointer"
+              title="Descargar proyecto completo .ZIP / Download project .ZIP"
+            >
+              <Download className="w-3.5 h-3.5 text-amber-600" />
+              <span>.ZIP</span>
+            </a>
+
             {/* Acceso directo a Eliminar Clientes en la barra de navegación */}
             {(currentTab === 'admin' || isAdmin) && (
               <button
@@ -292,6 +303,18 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               {t('nav.admin', lang)}
             </button>
+            <a
+              href="./TripNow-App.zip"
+              download="TripNow-App.zip"
+              onClick={() => setMobileMenuOpen(false)}
+              className="px-3 py-2 text-left text-sm rounded-lg text-amber-900 bg-amber-50 border border-amber-200/80 font-medium flex items-center justify-between"
+            >
+              <div className="flex items-center gap-2">
+                <Download className="w-4 h-4 text-amber-600" />
+                <span>{lang === 'es' ? 'Descargar Código (.ZIP)' : 'Download Source (.ZIP)'}</span>
+              </div>
+              <span className="text-[10px] font-mono text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded">.ZIP</span>
+            </a>
             {!profile && (
               <button
                 onClick={() => { setMobileMenuOpen(false); onOpenAuthModal(); }}

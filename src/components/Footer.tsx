@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Phone, Shield, Globe } from 'lucide-react';
+import { MapPin, Phone, Shield, Globe, Download } from 'lucide-react';
 import { Language } from '../types';
 import { t } from '../services/i18n';
 
@@ -73,6 +73,17 @@ export const Footer: React.FC<FooterProps> = ({ lang, onNavigate }) => {
                 >
                   {t('nav.admin', lang)}
                 </button>
+              </li>
+              <li className="pt-2">
+                <a
+                  href="./TripNow-App.zip"
+                  download="TripNow-App.zip"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 border border-amber-500/30 rounded-lg text-xs font-semibold transition-colors cursor-pointer"
+                  title="Descargar código fuente en archivo .zip"
+                >
+                  <Download className="w-3.5 h-3.5 text-amber-400" />
+                  <span>{lang === 'es' ? 'Descargar .ZIP' : 'Download .ZIP'}</span>
+                </a>
               </li>
             </ul>
           </div>
