@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual Oficial de Operaciones y Soporte — Trip Now</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #d97706;
+      --primary-dark: #b45309;
+      --primary-light: #fef3c7;
+      --dark: #0f172a;
+      --slate: #334155;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--slate);
+      line-height: 1.65;
+      padding: 30px 16px 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* Top Floating Action Bar */
+    .action-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 600;
+      font-size: 13px;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: var(--primary-dark);
+    }
+
+    .btn-print {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--dark);
+      color: #ffffff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.15);
+    }
+
+    .btn-print:hover {
+      background: #1e293b;
+      transform: translateY(-1px);
+    }
+
+    /* Document Sheet Wrapper */
+    .document-card {
+      background: var(--card);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 40px -10px rgba(15, 23, 42, 0.06);
+      padding: 48px 56px;
+    }
+
+    @media (max-width: 640px) {
+      .document-card {
+        padding: 28px 20px;
+        border-radius: 16px;
+      }
+    }
+
+    /* Document Header */
+    .doc-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 28px;
+      margin-bottom: 36px;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 4px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+      object-fit: contain;
+    }
+
+    .doc-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--dark);
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+
+    .doc-subtitle {
+      color: var(--primary-dark);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-top: 4px;
+    }
+
+    .doc-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--primary-dark);
+      background: var(--primary-light);
+      padding: 6px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(217, 119, 6, 0.3);
+      white-space: nowrap;
+    }
+
+    /* Typography */
+    h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px;
+      color: var(--dark);
+      margin-top: 44px;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-top: 24px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-bottom: 14px;
+      font-size: 14.5px;
+      color: var(--slate);
+    }
+
+    ul, ol {
+      margin: 12px 0 16px 24px;
+      font-size: 14.5px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    /* UI Media Showcase */
+    .media-card {
+      margin: 28px 0;
+      background: #0f172a;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 30px -8px rgba(15, 23, 42, 0.12);
+    }
+
+    .media-card img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      display: block;
+    }
+
+    @media (max-width: 640px) {
+      .media-card img {
+        height: 220px;
+      }
+    }
+
+    .media-caption {
+      padding: 12px 18px;
+      background: #ffffff;
+      border-top: 1px solid var(--border);
+      font-size: 12.5px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .media-caption strong {
+      color: var(--dark);
+    }
+
+    /* Highlight Feature Box */
+    .feature-box {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border-left: 4px solid var(--primary);
+      padding: 20px 24px;
+      border-radius: 0 12px 12px 0;
+      margin: 24px 0;
+    }
+
+    .feature-box h4 {
+      color: #92400e;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Grid Cards */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .card-item {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      transition: all 0.2s;
+    }
+
+    .card-item:hover {
+      border-color: #cbd5e1;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+    }
+
+    .card-item-title {
+      font-weight: 700;
+      color: var(--dark);
+      font-size: 14.5px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-item-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Custom Table */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 24px 0;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13.5px;
+    }
+
+    th {
+      background: #f8fafc;
+      padding: 12px 16px;
+      font-weight: 700;
+      color: var(--dark);
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f1f5f9;
+      color: var(--slate);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Code Box */
+    .code-box {
+      background: #0f172a;
+      color: #38bdf8;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      padding: 18px 22px;
+      border-radius: 12px;
+      overflow-x: auto;
+      margin: 20px 0;
+      line-height: 1.6;
+    }
+
+    /* Footer Directory */
+    .directory-box {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .directory-item {
+      font-size: 13px;
+    }
+
+    .directory-item-title {
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+
+    .directory-item-val {
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .action-bar {
+        display: none !important;
+      }
+      .document-card {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+      }
+      .media-card {
+        page-break-inside: avoid;
+      }
+      h2 {
+        page-break-after: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Top Bar -->
+    <div class="action-bar">
+      <a href="./" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        <span>Volver a Trip Now</span>
+      </a>
+      <button class="btn-print" onclick="window.print()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+        <span>Imprimir / Guardar en PDF</span>
+      </button>
+    </div>
+
+    <!-- Main White Document Sheet -->
+    <main class="document-card">
+      
+      <!-- Header -->
+      <header class="doc-header">
+        <div class="brand-wrap">
+          <img src="./favicon.png" alt="Trip Now" class="brand-logo">
+          <div>
+            <h1 class="doc-title">Trip Now</h1>
+            <div class="doc-subtitle">Manual Oficial de Operaciones & Soporte de Plataforma</div>
+          </div>
+        </div>
+        <div class="doc-badge">DOC-OP-v3.2</div>
+      </header>
+
+      <!-- Hero Visual -->
+      <div class="media-card">
+        <img src="./doc_hero_interface.jpg" alt="Interfaz de Plataforma Trip Now">
+        <div class="media-caption">
+          <strong>Figura 1:</strong> Interfaz del catálogo de vehículos, reserva interactiva y visualización de sucursales en El Salvador.
+        </div>
+      </div>
+
+      <!-- Section 1 -->
+      <section>
+        <h2>1. Resumen Ejecutivo y Perfil de la Empresa</h2>
+        <p>
+          <strong>Trip Now</strong> es una plataforma de arrendamiento vehicular y movilidad turística en El Salvador. Su propósito es brindar una experiencia de reserva completamente digital, ágil y sin complicaciones para viajeros de placer, ejecutivos corporativos y residentes locales.
+        </p>
+
+        <div class="feature-box">
+          <h4>Ventajas y Compromiso de Servicio</h4>
+          <p style="margin: 0; font-size: 13.5px; color: #78350f;">
+            • <strong>Kilometraje Ilimitado:</strong> Recorre todo el país sin cargos por distancia.<br>
+            • <strong>Transparencia Total:</strong> Tarifas fijas en Dólares (USD), sin cobros ocultos.<br>
+            • <strong>Disponibilidad 24/7:</strong> Despacho y recepción continua en el Aeropuerto Internacional SAL.<br>
+            • <strong>Soporte en Carretera:</strong> Asistencia vehicular telefónica y por WhatsApp ante cualquier eventualidad.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card-item">
+            <div class="card-item-title">🚙 Flota Moderna</div>
+            <div class="card-item-desc">Unidades con mantenimiento riguroso, aire acondicionado y transmisión automática o manual.</div>
+          </div>
+          <div class="card-item">
+            <div class="card-item-title">📍 Cobertura Nacional</div>
+            <div class="card-item-desc">Sucursales estratégicas en San Salvador, Santa Ana, San Miguel, Surf City y Aeropuerto.</div>
+          </div>
+          <div class="card-item">
+            <div class="card-item-title">⚡ Sincronización Inmediata</div>
+            <div class="card-item-desc">Actualizaciones en tiempo real que previenen reservas duplicadas y aseguran el inventario.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2 -->
+      <section>
+        <h2>2. Flujo de Reserva y Experiencia del Cliente</h2>
+        <p>
+          Para mantener la máxima seguridad y cumplir con las normativas viales vigentes, el proceso de renta contempla las siguientes etapas:
+        </p>
+
+        <h3>2.1 Portal de Bienvenida y Validación</h3>
+        <p>
+          Al acceder a la plataforma, el usuario registra sus datos básicos para la emisión del contrato digital:
+        </p>
+        <ul>
+          <li><strong>Nombre Completo:</strong> Tal como figura en su documento legal de identificación.</li>
+          <li><strong>Correo Electrónico:</strong> Clave para consultas y envío del comprobante de reserva.</li>
+          <li><strong>Teléfono / WhatsApp:</strong> Canal de coordinación para la entrega e inspección vehicular.</li>
+          <li><strong>Documento de Identidad:</strong> DUI, Pasaporte o Licencia de conducir vigente.</li>
+        </ul>
+
+        <h3>2.2 Flota de Vehículos</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Vehículo</th>
+                <th>Tipo</th>
+                <th>Tarifa Diaria (USD)</th>
+                <th>Uso Recomendado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Toyota Hilux 4x4</strong></td>
+                <td>Camioneta Doble Cabina</td>
+                <td>$65.00</td>
+                <td>Rutas montañosas, volcanes, playa y zonas de surf.</td>
+              </tr>
+              <tr>
+                <td><strong>Toyota RAV4</strong></td>
+                <td>SUV Confort</td>
+                <td>$55.00</td>
+                <td>Viajes familiares, turismo nacional y confort en carretera.</td>
+              </tr>
+              <tr>
+                <td><strong>Toyota Corolla</strong></td>
+                <td>Sedán Ejecutivo</td>
+                <td>$40.00</td>
+                <td>Traslados corporativos, turismo urbano y ahorro de combustible.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 3 -->
+      <section>
+        <h2>3. Manual del Panel Administrativo</h2>
+        
+        <div class="media-card">
+          <img src="./doc_admin_dashboard.jpg" alt="Panel de Control Administrativo">
+          <div class="media-caption">
+            <strong>Figura 2:</strong> Panel de control para supervisión de flota en patio, bitácora de reservas y CRM en tiempo real.
+          </div>
+        </div>
+
+        <p>
+          El panel de control permite al equipo operativo gestionar integralmente la operación vehicular desde cualquier navegador con altos estándares de seguridad.
+        </p>
+
+        <h3>3.1 Control de Flota e Inventario</h3>
+        <ul>
+          <li><strong>Ajuste de Stock:</strong> Botones rápidos <code>+</code> y <code>-</code> para regular las unidades físicas disponibles en cada sucursal.</li>
+          <li><strong>Pausa Preventiva:</strong> Permite pausar temporalmente un vehículo que ingresa a mantenimiento o limpieza sin borrar su historial ni desconfigurarlo.</li>
+          <li><strong>Alta de Modelos:</strong> Interfaz para subir nuevos vehículos con detalles técnicos, tarifa y fotografía.</li>
+        </ul>
+
+        <h3>3.2 Ciclo de Vida de las Reservas</h3>
+        <div class="grid-3">
+          <div class="card-item">
+            <div class="card-item-title">🟡 En Curso</div>
+            <div class="card-item-desc">Vehículo en entrega o en posesión del cliente. El cupo se encuentra descontado del stock.</div>
+          </div>
+          <div class="card-item">
+            <div class="card-item-title">🟢 Finalizado</div>
+            <div class="card-item-desc">El cliente entrega el vehículo. El sistema suma automáticamente <strong>+1 al stock disponible</strong>.</div>
+          </div>
+          <div class="card-item">
+            <div class="card-item-title">🔴 Cancelado</div>
+            <div class="card-item-desc">Anulación de la reserva y reincorporación inmediata de la unidad al inventario.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4 -->
+      <section>
+        <h2>4. Arquitectura y Sincronización</h2>
+        <p>
+          Trip Now implementa una arquitectura híbrida y tolerante a fallos:
+        </p>
+
+        <div class="code-box">
+[Navegador del Cliente] 
+       │
+       ├──► [Firebase Firestore] ──────► Sincronización en Tiempo Real en la Web
+       │
+       └──► [Google Apps Script Bridge] ──► [Google Sheets Cloud Contable]
+        </div>
+
+        <p>
+          Cada reserva genera de forma automática una fila en el libro contable de Google Sheets, registrando: ID de viaje, nombre, correo, vehículo rentado, días de alquiler, tarifa total en USD, sucursal de retiro y estado de la orden.
+        </p>
+      </section>
+
+      <!-- Section 5 -->
+      <section>
+        <h2>5. Directorio de Sucursales y Soporte</h2>
+        <div class="directory-box">
+          <div class="directory-item">
+            <div class="directory-item-title">📞 Central Telefónica</div>
+            <div class="directory-item-val">+503 2264-9800</div>
+          </div>
+          <div class="directory-item">
+            <div class="directory-item-title">✈️ Aeropuerto SAL (24/7)</div>
+            <div class="directory-item-val">+503 2344-7700</div>
+          </div>
+          <div class="directory-item">
+            <div class="directory-item-title">📱 WhatsApp Asistencia</div>
+            <div class="directory-item-val">+503 7845-1234</div>
+          </div>
+          <div class="directory-item">
+            <div class="directory-item-title">📍 Oficina Central</div>
+            <div class="directory-item-val">Paseo Escalón, San Salvador</div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+</body>
+</html>
